@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "944564058193",
+    "project_id": "ihapp-183f6",
+    "storage_bucket": "ihapp-183f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:944564058193:android:bd0d140a8a3222adeca070",
+        "android_client_info": {
+          "package_name": "com.example.ihapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "944564058193-9np4eirrtlf9gjr55vcppvbjn84li89t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKipgc3FOxa0-06QOKoPYbDl7FLq-VuGM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "944564058193-9np4eirrtlf9gjr55vcppvbjn84li89t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
