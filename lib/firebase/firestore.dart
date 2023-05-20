@@ -113,8 +113,9 @@ class FireStore {
   }
 
   //Geçmiş konum verilerini  çekme
-  Future<void> getLocationInfo(
+  Future<List<Map<String, dynamic>>> getLocationInfo(
       {required String userUid, required String seferName}) async {
+    List<Map<String, dynamic>> location = [];
     final usersRef = await _firestore
         .collection(Collections.Users.name)
         .doc(userUid)
@@ -124,21 +125,12 @@ class FireStore {
         .doc(Documents.Gecmis.name)
         .collection(Collections.Konumlar.name)
         .get();
-    List<String> tarihListesiStr = [];
-    List<DateTime> tarihListesiDate = [];
 
     usersRef.docs.forEach((element) {
-      String tarih = element.data()['tarih'];
-      tarih = tarih.replaceAll('t_', '');
-      tarihListesiStr.add(tarih);
+      location.add(element.data());
     });
 
-    
-    tarihListesiStr.forEach((element) {
-      String tarihStr = element;
-      DateTime tarih = DateFormat('dd-MM-yyyy__HH-mm-ss').parse(tarihStr);
-      tarihListesiDate.add(tarih);
-    });
+    return location;
   }
 
   Future<void> addIha({
