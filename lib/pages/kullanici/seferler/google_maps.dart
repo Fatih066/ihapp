@@ -20,6 +20,7 @@ class _GoogleMapsState extends State<GoogleMaps> {
     final List<Map<String, dynamic>> locationData = await FireStore()
         .getLocationInfo(userUid: userUid, seferName: widget.seferName);
     for (var data in locationData) {
+      print(data);
       final double lat = data['lat'];
       final double lon = data['lon'];
       _polylineCoordinates.add(LatLng(lat, lon));
@@ -46,7 +47,7 @@ class _GoogleMapsState extends State<GoogleMaps> {
         polylines: {
           Polyline(
             polylineId: PolylineId(widget.seferName),
-            color: Colors.blue,
+            color: Colors.red,
             width: 5,
             points: _polylineCoordinates,
           ),

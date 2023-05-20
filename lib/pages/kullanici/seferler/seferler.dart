@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:ihapp/consts/paddings.dart';
 import 'package:ihapp/firebase/auth.dart';
 import 'package:ihapp/firebase/firestore.dart';
+import 'package:ihapp/functions/custom_functions.dart';
+import 'package:ihapp/pages/kullanici/seferler/google_maps.dart';
 import 'package:ihapp/pages/kullanici/seferler/sefer_model.dart';
 import 'package:ihapp/widgets/custom_text.dart';
 
@@ -58,9 +60,10 @@ class _SeferlerState extends State<Seferler> {
                     return InkWell(
                       onTap: () async {
                         if (seferModel.seferName != null) {
-                          await FireStore().getLocationInfo(
-                              userUid: user!.uid,
-                              seferName: seferModel.seferName!);
+                          GoPagePushReplacement(
+                              widget:
+                                  GoogleMaps(seferName: seferModel.seferName!),
+                              context: context);
                         }
                       },
                       child: Card(
