@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
@@ -51,7 +53,7 @@ class FireStore {
     if (userList.isNotEmpty) {
       for (var i = 0; i < userList.length; i++) {
         if (userList[i].id == uid) {
-          isUser = true;
+          return isUser = true;
         } else {
           isUser = false;
         }
@@ -59,13 +61,12 @@ class FireStore {
     } else if (ihasList.isNotEmpty) {
       for (var i = 0; i < ihasList.length; i++) {
         if (ihasList[i].id == uid) {
-          isUser = true;
+          return isUser = true;
         } else {
           isUser = false;
         }
       }
     }
-
     return isUser;
   }
 
@@ -112,8 +113,25 @@ class FireStore {
         .set(userPositionInfos);
   }
 
+  //Güncel konum alma
+  Future<Stream<DocumentSnapshot<Map<String, dynamic>>>> getLocationGuncel(
+      {required String userUid, required String seferName}) async {
+    Stream<DocumentSnapshot<Map<String, dynamic>>> location;
+
+    location = await _firestore
+        .collection(Collections.Users.name)
+        .doc(userUid)
+        .collection(Collections.Seferler.name)
+        .doc(seferName)
+        .collection(Collections.Konumlar.name)
+        .doc(Documents.Guncel.name)
+        .snapshots();
+
+    return location;
+  }
+
   //Geçmiş konum verilerini  çekme
-  Future<List<Map<String, dynamic>>> getLocationInfo(
+  Future<List<Map<String, dynamic>>> getLocationInfoPast(
       {required String userUid, required String seferName}) async {
     List<Map<String, dynamic>> location = [];
     final usersRef = await _firestore

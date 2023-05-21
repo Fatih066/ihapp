@@ -60,7 +60,7 @@ class _SeferlerState extends State<Seferler> {
                     return InkWell(
                       onTap: () async {
                         if (seferModel.seferName != null) {
-                          GoPagePushReplacement(
+                          GoPagePush(
                               widget:
                                   GoogleMaps(seferName: seferModel.seferName!),
                               context: context);
