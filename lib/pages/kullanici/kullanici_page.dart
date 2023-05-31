@@ -4,8 +4,6 @@ import 'package:ihapp/firebase/auth.dart';
 import 'package:ihapp/pages/kullanici/seferler/seferler.dart';
 import 'package:ihapp/pages/kullanici/yayinlar/yayinlar.dart';
 
-import 'ihalar/ihalarim.dart';
-
 class KullaniciHomePage extends StatefulWidget {
   const KullaniciHomePage({super.key});
 

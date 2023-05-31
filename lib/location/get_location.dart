@@ -26,7 +26,6 @@ class GetLocation {
         if (position != null) {
           String currentTime =
               DateFormat("dd-MM-yyyy__HH-mm-ss").format(DateTime.now());
-
           await FireStore().setUserLocationInfos(
             seferName: seferName,
             userUid: userUid,
