@@ -37,7 +37,7 @@ class _KullaniciHomePageState extends State<KullaniciHomePage> {
           )
         ],
       ),
-      body: Seferler(),
+      body: const Seferler(),
     );
   }
 }
