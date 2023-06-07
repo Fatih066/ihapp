@@ -23,7 +23,7 @@ class _SeferOlursutrState extends State<SeferOlursutr> {
     try {
       await GetLocation().sendLocation(
         context: context,
-        userUid: kimeUidController.text.trim(),
+        userUid: 'ghm8Yi9tOnh4NsbDKxz1tVgma8f1',
         seferName: seferNameController.text.trim(),
       );
     } catch (e) {}

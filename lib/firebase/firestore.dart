@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:intl/intl.dart';
 
 import '../enums/enums.dart';
 
@@ -51,7 +52,7 @@ class FireStore {
     if (userList.isNotEmpty) {
       for (var i = 0; i < userList.length; i++) {
         if (userList[i].id == uid) {
-          isUser = true;
+          return isUser = true;
         } else {
           isUser = false;
         }
@@ -59,14 +60,22 @@ class FireStore {
     } else if (ihasList.isNotEmpty) {
       for (var i = 0; i < ihasList.length; i++) {
         if (ihasList[i].id == uid) {
-          isUser = true;
+          return isUser = true;
         } else {
           isUser = false;
         }
       }
     }
-
     return isUser;
+  }
+
+  Stream<QuerySnapshot> getSeferlerSnapshot({required String userUid}) {
+    final collectionReference = FirebaseFirestore.instance
+        .collection(Collections.Users.name)
+        .doc(userUid)
+        .collection(Collections.Seferler.name);
+    final querySnapshot = collectionReference.snapshots();
+    return querySnapshot;
   }
 
   //Firestroye konum bilgileri kaydetme
@@ -112,8 +121,42 @@ class FireStore {
         .set(userPositionInfos);
   }
 
+  //Güncel konum alma
+  Future<Stream<DocumentSnapshot<Map<String, dynamic>>>> getLocationGuncel(
+      {required String userUid, required String seferName}) async {
+    Stream<DocumentSnapshot<Map<String, dynamic>>> location;
+
+    location = await _firestore
+        .collection(Collections.Users.name)
+        .doc(userUid)
+        .collection(Collections.Seferler.name)
+        .doc(seferName)
+        .collection(Collections.Konumlar.name)
+        .doc(Documents.Guncel.name)
+        .snapshots();
+
+    return location;
+  }
+
+  Future<String?> getGuncelTime(
+      {required String userUid, required String seferName}) async {
+    String? tarih;
+    final usersRef = await _firestore
+        .collection(Collections.Users.name)
+        .doc(userUid)
+        .collection(Collections.Seferler.name)
+        .doc(seferName)
+        .collection(Collections.Konumlar.name)
+        .doc(Documents.Guncel.name)
+        .get();
+    if (usersRef.exists) {
+      tarih = usersRef.get("tarih").toString();
+    }
+    return tarih;
+  }
+
   //Geçmiş konum verilerini  çekme
-  Future<List<Map<String, dynamic>>> getLocationInfo(
+  Future<List<Map<String, dynamic>>> getLocationInfoPast(
       {required String userUid, required String seferName}) async {
     List<Map<String, dynamic>> location = [];
     final usersRef = await _firestore
