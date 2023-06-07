@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:intl/intl.dart';
 
 import '../enums/enums.dart';
 
@@ -70,6 +69,15 @@ class FireStore {
     return isUser;
   }
 
+  Stream<QuerySnapshot> getSeferlerSnapshot({required String userUid}) {
+    final collectionReference = FirebaseFirestore.instance
+        .collection(Collections.Users.name)
+        .doc(userUid)
+        .collection(Collections.Seferler.name);
+    final querySnapshot = collectionReference.snapshots();
+    return querySnapshot;
+  }
+
   //Firestroye konum bilgileri kaydetme
   Future<void> setUserLocationInfos({
     required String userUid,
@@ -128,6 +136,23 @@ class FireStore {
         .snapshots();
 
     return location;
+  }
+
+  Future<String?> getGuncelTime(
+      {required String userUid, required String seferName}) async {
+    String? tarih;
+    final usersRef = await _firestore
+        .collection(Collections.Users.name)
+        .doc(userUid)
+        .collection(Collections.Seferler.name)
+        .doc(seferName)
+        .collection(Collections.Konumlar.name)
+        .doc(Documents.Guncel.name)
+        .get();
+    if (usersRef.exists) {
+      tarih = usersRef.get("tarih").toString();
+    }
+    return tarih;
   }
 
   //Geçmiş konum verilerini  çekme

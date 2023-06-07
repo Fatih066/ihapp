@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:ihapp/enums/enums.dart';
 
 class SeferModel {
@@ -25,14 +28,8 @@ class SeferModelItems {
   }
 }
 
-Future<SeferModelItems> fetchSeferModels({required String userUid}) async {
-  final collectionReference = await FirebaseFirestore.instance
-      .collection(Collections.Users.name)
-      .doc(userUid)
-      .collection(Collections.Seferler.name);
-  final querySnapshot = await collectionReference.get();
-  print(querySnapshot.size);
-
+SeferModelItems fetchSeferModels(
+    {required QuerySnapshot<Object?> querySnapshot}) {
   List<SeferModel> seferModels = [];
 
   querySnapshot.docs.forEach((doc) {

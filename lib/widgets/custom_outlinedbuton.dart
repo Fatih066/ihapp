@@ -9,14 +9,15 @@ Widget customOutlinedButton({
   required final BuildContext context,
   final Color? backgroundColor,
   final Color? textColor,
+  final Color? borderColor,
 }) {
   return OutlinedButton(
     onPressed: onPressed,
     style: ButtonStyle(
         backgroundColor: MaterialStateProperty.resolveWith(
             (states) => backgroundColor ?? Colors.transparent),
-        side: MaterialStateProperty.resolveWith(
-            (states) => const BorderSide(width: 2))),
+        side: MaterialStateProperty.resolveWith((states) =>
+            BorderSide(width: 2, color: borderColor ?? Colors.black))),
     child: Padding(
       padding: verticalPadding20 / 1.5,
       child: CustomTextWidget(
